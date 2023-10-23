@@ -1,4 +1,13 @@
 import { MissionUtils } from '@woowacourse/mission-utils';
+
+class MyError extends Error {
+	constructor(...params) {
+		super(...params);
+		this.message = [...params];
+		this.name = '[ERROR]'
+	}
+}
+
 function start() {
 	const computer = makeRandomNumber();
 	try {
@@ -78,13 +87,15 @@ async function finishGame() {
 			'게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.'
 		);
 		switch (finalResult) {
-			case 1:
+			case '1':
 				// 게임 새로 시작
 				start();
 				break;
-			case 2:
+			case '2':
 				//게임 끝
 				break;
+			default:
+				throw new MyError('유요한 입력값이 아닙니다.');
 		}
 	} catch (error) {
 		MissionUtils.Console.print(error);
